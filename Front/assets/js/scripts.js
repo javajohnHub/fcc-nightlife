@@ -45,6 +45,6 @@ $("#go").on('click', function(){
 });
 
 
-$( "#attending" ).click(function() {
+$("#attending").on('click', function(){
     console.log('clickity');
 });
