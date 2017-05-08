@@ -8,10 +8,6 @@ $( document ).ready(function() {
         });
     }, "jsonp");
 
-    $("#attending").on('click', function(){
-        console.log('clickity');
-    });
-
 
 
 /**
@@ -23,20 +19,11 @@ $( document ).ready(function() {
  * @param {Boolean} isGoing If the current (logged-in) user is going
  */
 function addItem(id, name, image, goingCount, isGoing, address){
-    isGoing = isAttending(isGoing);
     $( ".result" ).append(
-        "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + "<h3 class='text-center'>" + name + "</h3>" + "<div class='col' id='attending'>" + isGoing + "</div>" + "<div class='col'>Going count " + goingCount + "</div></div></li>"
+        "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + "<h3 class='text-center'>" + name + "</h3>" + "<div class='col-4' id='attending'>" + isGoing + "</div>" + "<div class='col-4'>Going count " + goingCount + "</div></div></li>"
     );
 }
-function isAttending(isGoing){
-    if(isGoing){
-        isGoing = "Attending";
-    }else{
-        isGoing = "Not Attending";
-    }
-    return isGoing;
 
-}
 $("#go").on('click', function(){
     $(".result").html("")
     $.get( "/api/search/" + $("#city").val(), function( data ) {
