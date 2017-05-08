@@ -93,13 +93,15 @@ router.all('/search/:location', function (req, res, next) {
           if (nth + 1 == files.length) {
             console.log(goingObject);
             var toReturn = [];
+            console.log(response.jsonBody.businesses);
             response.jsonBody.businesses.forEach(function (business) {
               toReturn.push({
                 id: business.id,
                 name: business.name,
                 image: business.image_url,
                 goingCount: goingObject[business.id] ? goingObject[business.id].count : 0,
-                isGoing: goingObject[business.id] ? goingObject[business.id].isGoing : false
+                isGoing: goingObject[business.id] ? goingObject[business.id].isGoing : false,
+                address: business.location.address1
               })
             })
             console.log(goingObject);
