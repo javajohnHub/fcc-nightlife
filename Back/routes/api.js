@@ -65,7 +65,7 @@ function login(username, password, callback) {
 router.get("/logout", function (req, res) {
   req.logout();
   req.session.destroy();
-  res.render("login");
+  res.send("Logged out")
 });
 
 router.all("/login", passport.authenticate('local'), function (req, res) {
@@ -74,7 +74,7 @@ router.all("/login", passport.authenticate('local'), function (req, res) {
 });
 
 //Respond with ajax
-router.all('/api/search/:location', function (req, res, next) {
+router.all('/search/:location', function (req, res, next) {
   const client = yelp.client(token);
   client.search({
     term: 'Bar',
@@ -112,7 +112,7 @@ router.all('/api/search/:location', function (req, res, next) {
   });
 });
 
-router.all("/api/go/:placeid", requireAuth, function (req, res, next) {
+router.all("/go/:placeid", requireAuth, function (req, res, next) {
   fs.readFile("data/" + req.params.placeid, function (err, placeFile) {
     var placeData = err ? [] : JSON.parse(placeFile);
     if (placeData.indexOf(req.user.username) !== -1) {
@@ -126,7 +126,7 @@ router.all("/api/go/:placeid", requireAuth, function (req, res, next) {
   })
 })
 
-router.all("/api/leave/:placeid", requireAuth, function (req, res, next) {
+router.all("/leave/:placeid", requireAuth, function (req, res, next) {
   fs.readFile("data/" + req.params.placeid, function (err, placeFile) {
     var placeData = err ? [] : JSON.parse(placeFile);
     if (placeData.indexOf(req.user.username) === -1) {
