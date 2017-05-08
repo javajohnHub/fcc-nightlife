@@ -3,7 +3,7 @@ $( document ).ready(function() {
     $.get("https://ipinfo.io", function(response) {
         $.get( "/api/search/" + response.city, function( data ) {
             JSON.parse(data).forEach(function (bar){
-                addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing);
+                addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing, bar.address);
             })
         });
     }, "jsonp");
@@ -18,7 +18,7 @@ $( document ).ready(function() {
  * @param {Number} goingCount Number of people going
  * @param {Boolean} isGoing If the current (logged-in) user is going
  */
-function addItem(id, name, image, goingCount, isGoing){
+function addItem(id, name, image, goingCount, isGoing, address){
    $( ".result" ).append(
                 "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + "<h3 class='text-center'>" + name + "</h3>" + "<div class='col'>I Going " + isGoing + "</div>" + "<div class='col'>Going count " + goingCount + "</div></div></li>"
             );
