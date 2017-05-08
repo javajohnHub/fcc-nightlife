@@ -30,6 +30,10 @@ passport.deserializeUser(function (user, done) {
 
 var LocalStrategy = require('passport-local').Strategy;
 
+router.get('/', function(req, res){
+    res.render('index');
+});
+
 passport.use(new LocalStrategy(
   function (username, password, done) {
     login(username, password, function (status) {
@@ -139,5 +143,6 @@ router.all("/api/leave/:placeid", requireAuth, function (req, res, next) {
     })
   })
 })
+
 
 module.exports = router;
