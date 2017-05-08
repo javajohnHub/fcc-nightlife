@@ -8,7 +8,11 @@ $( document ).ready(function() {
         });
     }, "jsonp");
 
-});
+    $("#attending").on('click', function(){
+        console.log('clickity');
+    });
+
+
 
 /**
  * Add item to results
@@ -45,6 +49,4 @@ $("#go").on('click', function(){
 });
 
 
-$("#attending").on('click', function(){
-    console.log('clickity');
 });
