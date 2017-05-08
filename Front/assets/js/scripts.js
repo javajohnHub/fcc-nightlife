@@ -45,5 +45,6 @@ $("#go").on('click', function(){
 });
 
 $("#attending").click(function(){
-    $("#attending").html();
+    html = $("#attending").html();
+    html.val(html.val() === 'attending' ? 'not attending' : 'not attending');
 });
