@@ -1,11 +1,38 @@
-$(document).on("click", "going", function () {
-    var id = $(this).data("id");
 
+    $(document).on("change", ":checkbox", function (event) {
+        event.preventDefault()
+        var id = $(this).data("id");
+        
 
-    $.get("/api/go/" + id, function (data) {
-        if (data == "Now Going"){
-            //Increment going count
-            //Mark as going
+        if (!$(this).prop("checked")){
+            $.get("/api/leave/" + id, function (data) {
+            switch (data) {
+                case "Not Authenticated":
+                    //alert("Not authenticated");
+                    $(event.target).prop('checked', true);
+                    break;
+                case "Now Left":
+                    $("#place-" + id + " .gocount span").html(+$("#place-" + id + " .gocount span").html()-1)
+                    break;
+                case "Already Left":
+                    alert("Already not going, status unchanged");
+                    break;
+            }
+        });
+        } else {
+            $.get("/api/go/" + id, function (data) {
+            switch (data) {
+                case "Not Authenticated":
+                    $(event.target).prop('checked', false);
+                    break;
+                case "Now Going":
+                    $("#place-" + id + " .gocount span").html(+$("#place-" + id + " .gocount span").html()+1)
+                    break;
+                case "Already Going":
+                    alert("Already going, status unchanged");
+                    break;
+            }
+        });
         }
-    });
-})
+        
+    })

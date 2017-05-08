@@ -19,8 +19,17 @@ $( document ).ready(function() {
  * @param {Boolean} isGoing If the current (logged-in) user is going
  */
 function addItem(id, name, image, goingCount, isGoing, address){
+    var checked = isGoing ? 'checked' : "";
     $( ".result" ).append(
-        "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + "<h3 class='text-center'>" + name + "</h3>" + "<div class='col-4' id='attending'>" + isGoing + "</div>" + "<div class='col-4'>Going count " + goingCount + "</div></div></li>"
+        "<li class='list-group-item' id='place-" + id + "'><div class='row'><div class='col-3'>"+
+        "<img class='img-fluid img-thumbnail rounded ' style='width:100px;height:100px;' src='" + image + "'><p>" + 
+        address + "</p></div>" +
+        "<h3 class='text-center col-3'>" + name + "</h3>" + 
+        "<div class='attending col-3'>" + `<h2>Wanna go?</h2><label class="switch">
+  <input type="checkbox" data-id='${id}' ${checked}>
+  <div class="slider"></div>
+</label>` + "</div>" + 
+        "<div class='col-3 gocount' >Going count <span>" + goingCount + "</span></div></div></li>"
     );
 }
 
