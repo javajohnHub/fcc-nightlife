@@ -11,7 +11,7 @@ var ui = require('./routes/ui');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../Front'));
+app.set('views', path.join(__dirname, 'Front'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -20,7 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use("/assets", express.static(path.join(__dirname, '../Front/assets')));
+app.use("/assets", express.static(path.join(__dirname, 'Front/assets')));
 var cookieParser = require('cookie-parser')
 var session = require('express-session')
 app.use(session({ secret: 'keyboard cat' }))
