@@ -20,6 +20,6 @@ $( document ).ready(function() {
  */
 function addItem(id, name, image, goingCount, isGoing){
    $( ".result" ).append(
-                "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' src='" + image + "'>" + name +  + isGoing + goingCount + "</div></li>"
+                "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + name +  + isGoing + goingCount + "</div></li>"
             );
 }
