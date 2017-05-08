@@ -4,7 +4,7 @@ $( document ).ready(function() {
         $.get( "/api/search/" + response.city, function( data ) {
             $( ".result" ).html( data, function(){
                 $("#messages").append(
-                    "<li class='list-group-item'>" + data.name + "<img src='" + data.image + "' target='_blank'>" + data.isGoing + data.goingCount + "</li>"
+                    "<li class='list-group-item'>" + data.name + "<img src='" + data.image + "'>" + data.isGoing + data.goingCount + "</li>"
                 );
 
             } );
