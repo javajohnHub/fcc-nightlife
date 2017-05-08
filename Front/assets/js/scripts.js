@@ -19,7 +19,7 @@ $( document ).ready(function() {
  * @param {Boolean} isGoing If the current (logged-in) user is going
  */
 function addItem(id, name, image, goingCount, isGoing, address){
-    isAttending(isGoing);
+    isGoing = isAttending(isGoing);
     $( ".result" ).append(
         "<li class='list-group-item'>" + "<div class='row'><img class='img-fluid img-thumbnail rounded float-left' style='width:100px;height:100px;' src='" + image + "'>" + "<h3 class='text-center'>" + name + "</h3>" + "<div class='col' id='attending'>" + isGoing + "</div>" + "<div class='col'>Going count " + goingCount + "</div></div></li>"
     );
@@ -42,4 +42,8 @@ $("#go").on('click', function(){
 
     });
     $("#city").val("")
+});
+
+$("#attending").click(function(){
+    $("#attending").html();
 });
