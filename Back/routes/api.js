@@ -11,10 +11,7 @@ yelp.accessToken("cLtRtRiTihjntorYxDRUdA", "zLt1ruLJdfouqYAKUALRAaf7ulREjDMTTwcp
 var express = require('express');
 var fs = require('fs');
 var router = express.Router();
-var cookieParser = require('cookie-parser')
-var session = require('express-session')
-router.use(cookieParser()) // required before session.
-router.use(session({ secret: 'keyboard cat' }))
+
 var passport = require('passport');
 router.use(passport.initialize());
 router.use(passport.session());
@@ -69,7 +66,7 @@ function login(username, password, callback) {
 router.get("/logout", function (req, res) {
   req.logout();
   req.session.destroy();
-  res.render("login");
+  res.send("Logged out")
 });
 
 router.all("/login", passport.authenticate('local'), function (req, res) {
@@ -78,7 +75,7 @@ router.all("/login", passport.authenticate('local'), function (req, res) {
 });
 
 //Respond with ajax
-router.all('/api/search/:location', function (req, res, next) {
+router.all('/search/:location', function (req, res, next) {
   const client = yelp.client(token);
   client.search({
     term: 'Bar',
@@ -89,17 +86,20 @@ router.all('/api/search/:location', function (req, res, next) {
     fs.readdir("data/", function (err, files) {
       files.forEach(function (file, nth) {
         fs.readFile("data/" + file, function (rerr, data) {
-          var goingCount = rerr ? 0 : JSON.parse(data).length
-          goingObject[file] = goingCount;
+          var goingCount = rerr ? 0 : JSON.parse(data).length;
+          var isGoing = rerr ? false : req.user ? (JSON.parse(data).indexOf(req.user.username) !== -1) : false;
+          goingObject[file] = {count: goingCount, isGoing: isGoing};
 
           if (nth + 1 == files.length) {
+            console.log(goingObject);
             var toReturn = [];
             response.jsonBody.businesses.forEach(function (business) {
               toReturn.push({
                 id: business.id,
                 name: business.name,
                 image: business.image_url,
-                going: goingObject[business.id] ? goingObject[business.id] : 0
+                goingCount: goingObject[business.id] ? goingObject[business.id].count : 0,
+                isGoing: goingObject[business.id] ? goingObject[business.id].isGoing : false
               })
             })
             console.log(goingObject);
@@ -116,7 +116,7 @@ router.all('/api/search/:location', function (req, res, next) {
   });
 });
 
-router.all("/api/go/:placeid", requireAuth, function (req, res, next) {
+router.all("/go/:placeid", requireAuth, function (req, res, next) {
   fs.readFile("data/" + req.params.placeid, function (err, placeFile) {
     var placeData = err ? [] : JSON.parse(placeFile);
     if (placeData.indexOf(req.user.username) !== -1) {
@@ -130,7 +130,7 @@ router.all("/api/go/:placeid", requireAuth, function (req, res, next) {
   })
 })
 
-router.all("/api/leave/:placeid", requireAuth, function (req, res, next) {
+router.all("/leave/:placeid", requireAuth, function (req, res, next) {
   fs.readFile("data/" + req.params.placeid, function (err, placeFile) {
     var placeData = err ? [] : JSON.parse(placeFile);
     if (placeData.indexOf(req.user.username) === -1) {
