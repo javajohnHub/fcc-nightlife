@@ -25,12 +25,12 @@ function addItem(id, name, image, goingCount, isGoing, address){
 }
 
 $("#go").on('click', function(){
-    document.getElementById("city").innerHtml = '';
+    $(".result").html("")
     $.get( "/api/search/" + $("#city").val(), function( data ) {
         JSON.parse(data).forEach(function (bar){
-            replaceItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing);
+            addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing);
         })
 
-    }, "jsonp");
-
+    });
+    $("#city").val("")
 });
