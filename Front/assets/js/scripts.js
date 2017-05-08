@@ -1,14 +1,14 @@
+var lastSearch = "";
+var myCity = ""
 $( document ).ready(function() {
 
     $.get("https://ipinfo.io", function(response) {
-        $.get( "/api/search/" + response.city, function( data ) {
-            JSON.parse(data).forEach(function (bar){
-                addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing, bar.address);
-            })
-        });
+        myCity = response.city
+        search(myCity)
     }, "jsonp");
 
 
+});
 
 /**
  * Add item to results
@@ -34,15 +34,21 @@ function addItem(id, name, image, goingCount, isGoing, address){
 }
 
 $("#go").on('click', function(){
+    
+    search($("#city").val());
+});
+
+function search(str){
+    if (!str) {
+        search(myCity)
+        return;
+    }
     $(".result").html("")
-    $.get( "/api/search/" + $("#city").val(), function( data ) {
+    $.get( "/api/search/" + str, function( data ) {
         JSON.parse(data).forEach(function (bar){
-            addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing);
+            addItem(bar.id, bar.name, bar.image, bar.goingCount, bar.isGoing, bar.address);
         })
 
     });
-    $("#city").val("")
-});
-
-
-});
+    lastSearch = str
+}
