@@ -20,8 +20,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-app.use(express.static(path.join(__dirname, 'public')));
+app.use("/assets", express.static(path.join(__dirname, '../Front/assets')));
 var cookieParser = require('cookie-parser')
 var session = require('express-session')
 app.use(session({ secret: 'keyboard cat' }))
@@ -50,7 +49,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-app.listen(8080, function() {
-    console.log('Magic happens on port 8080');
-});
