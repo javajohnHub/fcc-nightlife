@@ -11,3 +11,6 @@ img{
 #attending{
     border: 1px solid black;
 }
+li{
+    width: 100%;
+}
