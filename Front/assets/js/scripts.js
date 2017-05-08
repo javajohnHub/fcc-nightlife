@@ -44,7 +44,8 @@ $("#go").on('click', function(){
     $("#city").val("")
 });
 
-$("#attending").click(function(){
+
+$( "#attending" ).click(function() {
     console.log('clickity');
     html = $("#attending").html();
     html.val(html.val() === 'attending' ? 'not attending' : 'not attending');
